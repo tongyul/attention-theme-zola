@@ -3,9 +3,9 @@ title = "/"
 template = "section.html"
 +++
 
-# Zola **Attention** Theme
+# Zola Attention Theme
 
-***Attention** is a Zola theme dedicated to unleashing the most of the reader's
+***Attention** is a Zola theme dedicated to helping the reader focus their
 attention.* I as the author of the **Attention** theme ~~definitely doesn't
 personally experience absolutely bleak and crippling attention issues that
 almost failed me a course in college-level writing~~—I mean—*I have
@@ -21,7 +21,7 @@ avoid font variations in order to preserve readability, but instead exploit
 color difference; unfortunately, this would also mean that the theme is not
 usable if one has the particular color blindness—oh well, but the colors are
 always customizable ~~actually not yet~~. (Here is some `\texttt{}` please
-enjoy.) ([Self-link.](/))
+enjoy.) ([Links are de-emphasized.](/))
 
 You might notice that the character spacing in the first and second paragraphs
 after headings are larger than those in normal paragraphs. This is to ease
@@ -46,9 +46,70 @@ Here is some code that should not be highlighted but still is.
 \end{Verbatim}
 ```
 
-> <i>Winners win, losers lose.</i>
+> Winners win, losers lose.
 >
-> – My high-school biology teacher
+> —<cite>My high-school biology teacher</cite>
 
-(In the above case, I was using `<i>` and `</i>` to get actual italics. So yeah,
-that's a workaround if you *really* need font styling.)
+(In this case, the italic comes from the `<cite></cite>` tags; you can
+alternatively get italics from `<i></i>` if you *really* need to modify the font
+style, but *do you*?)
+
+## Second-Level Heading
+
+I need a paragraph to test the style for the second-level heading, so here I am,
+making one by writing some gibberish that is actually less gibberish than
+Lipsum. If the whole point of the theme is *attention* and *readability*, it
+wouldn't make sense to test the theme with literally unreadable text, would it?
+Notice the large character spacing is back; this works with any heading level.
+I think I'm almost done making this paragraph; just one more sentence, and I'll
+be done. There it goes.
+
+You might notice that the character spacing in the first and second paragraphs
+after headings are larger than those in normal paragraphs. This is to ease
+reading at the start and following interruptions. It is also advisable to
+*emphasize* the opening sentence of the article.
+
+You might notice that the character spacing in the first and second paragraphs
+after headings are larger than those in normal paragraphs. This is to ease
+reading at the start and following interruptions. It is also advisable to
+*emphasize* the opening sentence of the article.
+
+### Third-Level Heading
+
+I need a paragraph to test the style for the third-level heading, so here I am,
+making one by writing some gibberish that is actually less gibberish than
+Lipsum. If the whole point of the theme is *attention* and *readability*, it
+wouldn't make sense to test the theme with literally unreadable text, would it?
+Notice the large character spacing is back; this works with any heading level.
+I think I'm almost done making this paragraph; just one more sentence, and I'll
+be done. There it goes.
+
+#### Fourth-Level Heading (yeah don't do that)
+
+I need a paragraph to test the style for the fourth-level heading, so here I am,
+making one by writing some gibberish that is actually less gibberish than
+Lipsum. If the whole point of the theme is *attention* and *readability*, it
+wouldn't make sense to test the theme with literally unreadable text, would it?
+Notice the large character spacing is back; this works with any heading level.
+I think I'm almost done making this paragraph; just one more sentence, and I'll
+be done. There it goes.
+
+##### Fifth-Level Heading (not implemented)
+
+I need a paragraph to test the style for the fifth-level heading, so here I am,
+making one by writing some gibberish that is actually less gibberish than
+Lipsum. If the whole point of the theme is *attention* and *readability*, it
+wouldn't make sense to test the theme with literally unreadable text, would it?
+Notice the large character spacing is back; this works with any heading level.
+I think I'm almost done making this paragraph; just one more sentence, and I'll
+be done. There it goes.
+
+###### Sixth-Level Heading (whyyyyy?)
+
+I need a paragraph to test the style for the sixth-level heading, so here I am,
+making one by writing some gibberish that is actually less gibberish than
+Lipsum. If the whole point of the theme is *attention* and *readability*, it
+wouldn't make sense to test the theme with literally unreadable text, would it?
+Notice the large character spacing is back; this works with any heading level.
+I think I'm almost done making this paragraph; just one more sentence, and I'll
+be done. There it goes.
