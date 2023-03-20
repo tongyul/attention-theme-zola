@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ get_url(path='color-light-1.css') | safe }}">
+	<link rel="stylesheet" href="{{ get_url(path='color-dark-1.css') | safe }}">
+	<link rel="stylesheet" href="{{ get_url(path='attention.css') | safe }}">
+	<script>
+		function set_dark(is_dark) {
+			if (is_dark) {
+				document.body.classList.remove('color-light-1');
+				document.body.classList.add('color-dark-1');
+			} else {
+				document.body.classList.remove('color-dark-1');
+				document.body.classList.add('color-light-1');
+			}
+		}
+
+		const body_onload = (() => {
+
+			const [onload, onload_append] = (() => {
+				let onload_list = [];
+				let onload_called = false;
+				return [
+					() => {
+						if (!onload_called) {
+							onload_called = true;
+							for (let f of onload_list) f();
+						}
+					},
+					f => onload_list.push(f),
+				];
+			})();
+
+			function match_dark() {
+				return window.matchMedia('(prefers-color-scheme: dark)');
+			}
+
+			onload_append(() => set_dark(match_dark().matches));
+			onload_append(() =>
+				match_dark()
+					.addEventListener("change", ev => set_dark(ev.matches))
+			);
+
+			return onload;
+		})();
+	</script>
+	{% block head -%}
+	<title>
+		{%- if page.title %}{{ page.title }} :: {% endif -%}
+		{%- if section.title %}{{ section.title }} :: {% endif -%}
+		{{ config.title }}
+	</title>
+	{%- endblock head %}
+</head>
+<body class='color-light-1' onload='body_onload();'>
+	{% block content -%}
+	Hello, world!
+	{%- endblock %}
+</body>
+</html>

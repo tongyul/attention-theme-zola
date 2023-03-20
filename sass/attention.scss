@@ -1,0 +1,91 @@
+
+body {
+	background-color: var(--text-bg);
+	margin: 0.8in auto;
+	max-width: 7in;
+	font-size: 11pt;
+
+	h1 {
+		color: var(--text-fg);
+		font-family: serif;
+		font-weight: normal;
+		letter-spacing: .1rem;
+	}
+
+	p {
+		color: var(--text-fg);
+		font-family: sans-serif;
+		letter-spacing: .05em;
+		line-height: 1.75;
+	}
+
+	h1,h2,h3,h4,h5,h6 {
+		&+p {
+			letter-spacing: .11em;
+
+			&+p {
+				letter-spacing: .07em;
+			}
+		}
+	}
+
+	strong {
+		color: var(--text-em2);
+		font-weight: inherit;
+	}
+
+	em {
+		color: var(--text-em);
+		font-style: normal;
+	}
+
+	del {
+		text-decoration: 0.85px line-through;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: 0.85px underline;
+	}
+
+	button {
+		color: inherit;
+		background-color: var(--text-bg2);
+		border: none;
+	}
+
+	code {
+		display: inline-block;
+
+		border: 1px solid var(--text-fg);
+		margin: -1px 0;
+		padding: 0 2px;
+		font-family: monospace;
+		/* font-size: 12pt; */
+		letter-spacing: 0;
+	}
+
+	pre {
+		padding: 4px;
+		overflow-x: auto;
+
+		code {
+			border: none;
+			padding: 0;
+		}
+	}
+
+	blockquote {
+		margin-inline-start: 0;
+		margin-inline-end: 0;
+		padding: 0.5em 0 0.5em 1em;
+		background: linear-gradient(0.25turn, var(--text-fg), var(--text-bg) .5em 100%);
+
+		:first-child {
+			margin-block-start: 0;
+		}
+		:last-child {
+			margin-block-end: 0;
+		}
+	}
+}
