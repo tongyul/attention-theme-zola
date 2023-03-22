@@ -3,8 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="{{ get_url(path='color-light-1.css') | safe }}">
-	<link rel="stylesheet" href="{{ get_url(path='color-dark-1.css') | safe }}">
 	<link rel="stylesheet" href="{{ get_url(path='attention.css') | safe }}">
 	<script>
 		function set_dark(is_dark) {
@@ -54,7 +52,7 @@
 	</title>
 	{%- endblock head %}
 </head>
-<body class='color-light-1' onload='body_onload();'>
+<body class='color-light-1 try-retina' onload='body_onload();'>
 	{% block content -%}
 	Hello, world!
 	{%- endblock %}

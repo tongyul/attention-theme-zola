@@ -1,0 +1,21 @@
+
+/* high-resolution-screen-specific stuff */
+
+:root, .try-retina {
+	/* nothing here yet */
+}
+
+/* selector by C. Coyier (2012)
+   https://css-tricks.com/snippets/css/retina-display-media-query/ */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+
+	.try-retina {
+		/* nothing here yet */
+	}
+}

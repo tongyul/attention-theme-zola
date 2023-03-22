@@ -8,12 +8,14 @@ template = "section.html"
 ***Attention** is a Zola theme dedicated to helping the reader focus their
 attention.* I as the author of the **Attention** theme ~~definitely doesn't
 personally experience absolutely bleak and crippling attention issues that
-almost failed me a course in college-level writing~~—I mean—*I have
-attention issues*. I have some ideas about how to combat attention issues via
-document formatting, such as enlarged character spacing, font-choice,
-elimination of hard-to-read bolds, distinct styles for text and listing… and
-that's the basis for the **Attention** theme. ~~(You don't really need to pay
-full attention right now to my rambling as I'm just testing the SASS).~~
+almost failed me a course in college-level writing~~ have some ideas about how
+to combat attention issues via document formatting, such as enlarged character
+spacing, font-choice, elimination of hard-to-read bolds, distinct styles for
+text and listing… and that's the basis for the **Attention** theme. ~~(You
+don't really need to pay full attention right now to my rambling as I'm just
+testing the SASS).~~
+
+## Second-Level Heading
 
 I guess you might have been confused by all that you've just seen. What ~~the
 fuck~~ are these colors? Where are the **bolds** and *italics*? **Attention**
@@ -23,16 +25,16 @@ usable if one has the particular color blindness—oh well, but the colors are
 always customizable ~~actually not yet~~. (Here is some `\texttt{}` please
 enjoy.) ([Links are de-emphasized.](/))
 
-You might notice that the character spacing in the first and second paragraphs
-after headings are larger than those in normal paragraphs. This is to ease
-reading at the start and following interruptions. It is also advisable to
-*emphasize* the opening sentence of the article.
 <button onclick="set_dark(false);">Light theme</button>
 <button onclick="set_dark(true);">Dark theme</button>
+<button onclick="document.body.classList.toggle('try-retina');">Toggle `try-retina`</button>
+(Retina-resolution currently isn't any different.)
 
 `just some code (still in-line tho)`
 
 just some text
+
+`just some very very very very very very very very very very very very very very very very long in-line code`
 
 ```bash
 $ echo "Actual code that is not in-line"
@@ -40,76 +42,48 @@ $ echo "I haven't figured out how to make syntax highlighting not look nasty in 
 $ echo "Oh well, at least they're horizontally scrollable."
 ```
 
-```
-\begin{Verbatim}
-Here is some code that should not be highlighted but still is.
-\end{Verbatim}
-```
+You can get italics from `<i></i>` if you *really* need to modify the font
+style, but *do you*? EDIT: `<cite></cite>` has been unitalicized and given a
+different color (<cite>Myself, 2023</cite>). This helps the reader skip
+long-and-wordy citations as well as focus on them when necessary.
 
 > Winners win, losers lose.
 >
 > —<cite>My high-school biology teacher</cite>
 
-(In this case, the italic comes from the `<cite></cite>` tags; you can
-alternatively get italics from `<i></i>` if you *really* need to modify the font
-style, but *do you*?)
-
-## Second-Level Heading
-
-I need a paragraph to test the style for the second-level heading, so here I am,
-making one by writing some gibberish that is actually less gibberish than
-Lipsum. If the whole point of the theme is *attention* and *readability*, it
-wouldn't make sense to test the theme with literally unreadable text, would it?
-Notice the large character spacing is back; this works with any heading level.
-I think I'm almost done making this paragraph; just one more sentence, and I'll
-be done. There it goes.
-
-You might notice that the character spacing in the first and second paragraphs
-after headings are larger than those in normal paragraphs. This is to ease
-reading at the start and following interruptions. It is also advisable to
-*emphasize* the opening sentence of the article.
-
-You might notice that the character spacing in the first and second paragraphs
-after headings are larger than those in normal paragraphs. This is to ease
-reading at the start and following interruptions. It is also advisable to
-*emphasize* the opening sentence of the article.
-
 ### Third-Level Heading
 
-I need a paragraph to test the style for the third-level heading, so here I am,
-making one by writing some gibberish that is actually less gibberish than
-Lipsum. If the whole point of the theme is *attention* and *readability*, it
-wouldn't make sense to test the theme with literally unreadable text, would it?
-Notice the large character spacing is back; this works with any heading level.
-I think I'm almost done making this paragraph; just one more sentence, and I'll
-be done. There it goes.
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
 
-#### Fourth-Level Heading (yeah don't do that)
+#### Fourth-Level Heading
 
-I need a paragraph to test the style for the fourth-level heading, so here I am,
-making one by writing some gibberish that is actually less gibberish than
-Lipsum. If the whole point of the theme is *attention* and *readability*, it
-wouldn't make sense to test the theme with literally unreadable text, would it?
-Notice the large character spacing is back; this works with any heading level.
-I think I'm almost done making this paragraph; just one more sentence, and I'll
-be done. There it goes.
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
 
-##### Fifth-Level Heading (not implemented)
+##### Fifth-Level Heading
 
-I need a paragraph to test the style for the fifth-level heading, so here I am,
-making one by writing some gibberish that is actually less gibberish than
-Lipsum. If the whole point of the theme is *attention* and *readability*, it
-wouldn't make sense to test the theme with literally unreadable text, would it?
-Notice the large character spacing is back; this works with any heading level.
-I think I'm almost done making this paragraph; just one more sentence, and I'll
-be done. There it goes.
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
 
-###### Sixth-Level Heading (whyyyyy?)
+###### Sixth-Level Heading
 
-I need a paragraph to test the style for the sixth-level heading, so here I am,
-making one by writing some gibberish that is actually less gibberish than
-Lipsum. If the whole point of the theme is *attention* and *readability*, it
-wouldn't make sense to test the theme with literally unreadable text, would it?
-Notice the large character spacing is back; this works with any heading level.
-I think I'm almost done making this paragraph; just one more sentence, and I'll
-be done. There it goes.
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
+
+## To-do
+
+- [ ] Images
+- [ ] Extended stuff like footnotes
+- [ ] To-do lists
+- [ ] Lists in general
+- [ ] Tables
+- [ ] Math(?)
