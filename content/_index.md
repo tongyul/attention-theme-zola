@@ -51,6 +51,11 @@ long-and-wordy citations as well as focus on them when necessary.
 >
 > —<cite>My high-school biology teacher</cite>
 
+$${
+\def\i {\mathbfit{i}}
+\frac{-\hbar^2}{2m}\frac{\partial^2\Psi}{\partial x^2}+V(x)=\i\hbar\frac{\partial\Psi}{\partial t}
+}$$
+
 ### Third-Level Heading
 
 This is a stub-text paragraph that tries very hard to make itself look very long
