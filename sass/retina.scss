@@ -2,7 +2,7 @@
 /* high-resolution-screen-specific stuff */
 
 :root, .try-retina {
-	/* nothing here yet */
+    /* nothing here yet */
 }
 
 /* selector by C. Coyier (2012)
@@ -15,7 +15,7 @@ only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
 
-	.try-retina {
-		/* nothing here yet */
-	}
+    .try-retina {
+        /* nothing here yet */
+    }
 }

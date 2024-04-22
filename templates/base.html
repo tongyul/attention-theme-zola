@@ -1,60 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="{{ get_url(path='attention.css') | safe }}">
-	<script>
-		function set_dark(is_dark) {
-			if (is_dark) {
-				document.body.classList.remove('color-light-1');
-				document.body.classList.add('color-dark-1');
-			} else {
-				document.body.classList.remove('color-dark-1');
-				document.body.classList.add('color-light-1');
-			}
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ get_url(path='attention.css') | safe }}">
+    <script>
+        const theme_changer = () =>
+            document.getElementById('--internal-theme-changer');
+        const fontsize_changer = () =>
+            document.getElementById('--internal-fontsize-changer');
 
-		const body_onload = (() => {
+        function match_dark() {
+            return window.matchMedia('(prefers-color-scheme: dark)');
+        }
+        function get_dark() {
+            return document.body.classList.contains('color-dark-1');
+        }
+        function set_dark(is_dark) {
+            const t = theme_changer();
+            if (is_dark) {
+                document.body.classList.remove('color-light-1');
+                document.body.classList.add('color-dark-1');
+                if (t) t.textContent = '🌙';
+            } else {
+                document.body.classList.remove('color-dark-1');
+                document.body.classList.add('color-light-1');
+                if (t) t.textContent = '☀️';
+            }
+        }
 
-			const [onload, onload_append] = (() => {
-				let onload_list = [];
-				let onload_called = false;
-				return [
-					() => {
-						if (!onload_called) {
-							onload_called = true;
-							for (let f of onload_list) f();
-						}
-					},
-					f => onload_list.push(f),
-				];
-			})();
+        function rotate_template(classes) {
+            const cl = document.body.classList;
+            const e = classes;
+            let i = 0;
+            while (i < e.length && !cl.contains(e[i])) i += 1;
+            for (let c of e) cl.remove(c);
+            i = (i + 1) % (e.length + 1);
+            if (i < e.length) cl.add(e[i]);
+            return i;
+        }
 
-			function match_dark() {
-				return window.matchMedia('(prefers-color-scheme: dark)');
-			}
+        const rotate_emphasis = () => rotate_template([
+            'more-emphasis',
+            'even-more-emphasis',
+            'another-emphasis',
+        ]);
+        const rotate_letterspacing = () => rotate_template([
+            'sparse',
+            'xdense',
+            'dense',
+        ]);
+        const rotate_fontsize = () => {
+            const e = [
+                'large', 'xlarge', 'xxlarge', 'xxxlarge',
+                'xsmall', 'small',
+            ];
+            const l = ['L', 'XL', '2xL', '3xL', 'XS', 'S'];
+            const i = rotate_template(e);
+            const el = fontsize_changer();
+            if (el) el.textContent = i < l.length ? l[i] : 'M';
+        }
 
-			onload_append(() => set_dark(match_dark().matches));
-			onload_append(() =>
-				match_dark()
-					.addEventListener("change", ev => set_dark(ev.matches))
-			);
 
-			return onload;
-		})();
-	</script>
-	{% block head -%}
-	<title>
-		{%- if page.title %}{{ page.title }} :: {% endif -%}
-		{%- if section.title %}{{ section.title }} :: {% endif -%}
-		{{ config.title }}
-	</title>
-	{%- endblock head %}
+        const body_onload = (() => {
+
+            const [onload, onload_append] = (() => {
+                let onload_list = [];
+                let onload_called = false;
+                return [
+                    () => {
+                        if (!onload_called) {
+                            onload_called = true;
+                            for (let f of onload_list) f();
+                        }
+                    },
+                    f => onload_list.push(f),
+                ];
+            })();
+
+            onload_append(() => set_dark(match_dark().matches));
+            onload_append(() =>
+                match_dark()
+                    .addEventListener("change", ev => set_dark(ev.matches))
+            );
+            onload_append(() => {
+                const t = theme_changer();
+                if (t)
+                    t.addEventListener("click", _ => set_dark(!get_dark()));
+                else
+                    alert("Theme changer not found!");
+            });
+            onload_append(() => {
+                const p = document.createElement('p');
+                const h1s = document.getElementsByTagName('h1');
+                if (h1s.length) {
+                    h1s[0].after(p);
+                } else {
+                    document.body.firstChild.before(p);
+                }
+                const toggles = [...document.getElementsByClassName('toggle')];
+                for (let i = 0; i < toggles.length; i++) {
+                    p.appendChild(toggles[i]);
+                }
+            });
+            onload_append(rotate_fontsize);
+
+            return onload;
+        })();
+    </script>
+    {% block head -%}
+    <title>
+        {%- if page.title %}{{ page.title }} :: {% endif -%}
+        {%- if section.title %}{{ section.title }} :: {% endif -%}
+        {{ config.title }}
+    </title>
+    {%- endblock head %}
 </head>
-<body class='color-light-1 try-retina' onload='body_onload();'>
-	{% block content -%}
-	Hello, world!
-	{%- endblock %}
+<body class='color-light-1 try-retina more-emphasis dense xsmall' onload='body_onload();'>
+    <button class='toggle' id='--internal-theme-changer'></button>
+    <button class='toggle' onclick='document.body.classList.toggle("color-blind")'><strong>B</strong> <em>I</em></button>
+    <button class='toggle em-demo' onclick='rotate_emphasis()'><b>H</b></button>
+    <button class='toggle sp-demo' onclick='rotate_letterspacing()'><b>Sp</b></button>
+    <button class='toggle' onclick='rotate_fontsize()' id='--internal-fontsize-changer'></button>
+    {% block content -%}
+    <h1>Attention!!!</h1>
+    <p>…Hello, world :3</p>
+    {%- endblock %}
 </body>
 </html>

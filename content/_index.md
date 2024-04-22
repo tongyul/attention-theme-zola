@@ -8,12 +8,12 @@ template = "section.html"
 ***Attention** is a Zola theme dedicated to helping the reader focus their
 attention.* I as the author of the **Attention** theme ~~definitely doesn't
 personally experience absolutely bleak and crippling attention issues that
-almost failed me a course in college-level writing~~ have some ideas about how
-to combat attention issues via document formatting, such as enlarged character
-spacing, font-choice, elimination of hard-to-read bolds, distinct styles for
-text and listing… and that's the basis for the **Attention** theme. ~~(You
-don't really need to pay full attention right now to my rambling as I'm just
-testing the SASS).~~
+almost didn't fail me multiple courses in college-level writing~~ have some
+ideas about how to combat attention issues via document formatting, such as
+enlarged character spacing, font-choice, elimination of hard-to-read bolds,
+distinct styles for text and listing… and that's the basis for the
+**Attention** theme. ~~(You don't really need to pay full attention right now
+to my rambling as I'm just testing the SASS).~~
 
 ## Second-Level Heading
 
@@ -25,8 +25,6 @@ usable if one has the particular color blindness—oh well, but the colors are
 always customizable ~~actually not yet~~. (Here is some `\texttt{}` please
 enjoy.) ([Links are de-emphasized.](/))
 
-<button onclick="set_dark(false);">Light theme</button>
-<button onclick="set_dark(true);">Dark theme</button>
 <button onclick="document.body.classList.toggle('try-retina');">Toggle `try-retina`</button>
 (Retina-resolution currently isn't any different.)
 
@@ -87,8 +85,10 @@ screenshot.
 ## To-do
 
 - [ ] Images
-- [ ] Extended stuff like footnotes
+- [ ] Extended stuff like footnotes [^ft]
 - [ ] To-do lists
 - [ ] Lists in general
 - [ ] Tables
 - [ ] Math(?)
+
+[^ft]: hello world
