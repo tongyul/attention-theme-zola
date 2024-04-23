@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/open-dyslexic');
 @import "constants.scss";
 @import "color-light-1.scss";
 @import "color-dark-1.scss";
@@ -11,7 +12,7 @@ body {
     padding-right: 0.15in;
     max-width: 7in;
     font: 12pt sans-serif;
-    word-spacing: 105%;
+    word-spacing: 1pt;
 
     h1, h2, h3, h4, h5, h6, a, .em-demo { color: var(--text-fg); }
 
@@ -199,7 +200,7 @@ body.xdense {
     h1, h2, h3, h4, h5, h6, p, li, .sp-demo { letter-spacing: 0; }
 }
 body.dense {
-    word-spacing: default;
+    word-spacing: .5pt;
     h1, h2, h3, h4, h5 { letter-spacing: .02em; }
     h6, p, li, .sp-demo { letter-spacing: .05em; }
 }
@@ -210,3 +211,9 @@ body.xxlarge { font-size: 18pt; }
 body.xxxlarge { font-size: 24pt; }
 body.xsmall { font-size: 10pt; }
 body.small { font-size: 11pt; }
+
+body.dyslexic {
+    &, * {
+        font-family: 'Open-Dyslexic', sans-serif !important;
+    }
+}

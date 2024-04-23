@@ -117,11 +117,12 @@
     {%- endblock head %}
 </head>
 <body class='color-light-1 try-retina more-emphasis dense xsmall' onload='body_onload();'>
-    <button class='toggle' id='--internal-theme-changer'></button>
-    <button class='toggle' onclick='document.body.classList.toggle("color-blind")'><strong>B</strong> <em>I</em></button>
-    <button class='toggle em-demo' onclick='rotate_emphasis()'><b>H</b></button>
-    <button class='toggle sp-demo' onclick='rotate_letterspacing()'><b>Sp</b></button>
-    <button class='toggle' onclick='rotate_fontsize()' id='--internal-fontsize-changer'></button>
+    <button class='toggle' id='--internal-theme-changer' title='Toggle Light or Dark Theme'></button>
+    <button class='toggle' onclick='document.body.classList.toggle("color-blind")' title='Toggle Color-Blindness Assist'><strong>B</strong> <em>I</em></button>
+    <button class='toggle em-demo' onclick='rotate_emphasis()' title='Rotate Between Heading Colors'><b>H</b></button>
+    <button class='toggle sp-demo' onclick='rotate_letterspacing()' title='Adjust Letter and Word Spacing'><b>Sp</b></button>
+    <button class='toggle' onclick='rotate_fontsize()' id='--internal-fontsize-changer' title='Rotate Between Font Sizes'></button>
+    <button class='toggle' onclick='document.body.classList.toggle("dyslexic")' title='Toggle OpenDyslexic Font'><span style='font-family: Open-Dyslexic, sans-serif;'>Dys</span></button>
     {% block content -%}
     <h1>Attention!!!</h1>
     <p>…Hello, world :3</p>
