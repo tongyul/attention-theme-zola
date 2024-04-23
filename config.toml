@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://rain.cule.me"
+base_url = "https://tongyul.github.io/attention-theme-zola"
 title = "Attention Theme"
 
 # Whether to automatically compile all Sass files in the sass directory
