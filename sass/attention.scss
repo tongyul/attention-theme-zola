@@ -118,12 +118,14 @@ body {
     }
 
     del {
-        text-decoration: var(--decor-line-width) line-through;
+        text-decoration: line-through;
+        text-decoration-thickness: var(--decor-line-width);
     }
 
     a {
         color: inherit;
-        text-decoration: var(--decor-line-width) underline;
+        text-decoration: underline;
+        text-decoration-thickness: var(--decor-line-width);
     }
 
     cite {
@@ -143,7 +145,7 @@ body {
     }
 
     button {
-        font-size: 100%;
+        font: 100% Arial, sans-serif;
         text-align: center;
         color: inherit;
         background-color: var(--text-bg2);
