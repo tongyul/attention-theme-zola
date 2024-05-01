@@ -28,6 +28,13 @@
                 if (t) t.textContent = '☀️';
             }
         }
+        function try_going_back() {
+            let a = location.href.toString();
+            while (a[a.length - 1] == '/') a = a.substr(0, a.length - 1);
+            const b = "{{ config.base_url | safe }}";
+            if (a.includes(b) && b.length < a.trimRight('/').length)
+                document.getElementById('--internal-back-button')?.click();
+        }
 
         function rotate_template(classes) {
             const cl = document.body.classList;
@@ -80,60 +87,130 @@
                 ];
             })();
 
+            // Remove warning element to enable JS
             onload_append(() => document.getElementById('--internal-javascript-check').remove());
+            // Initially set the theme to system
             onload_append(() => set_dark(match_dark().matches));
+            // Adjust theme based on system theme change
             onload_append(() =>
                 match_dark()
                     .addEventListener("change", ev => set_dark(ev.matches))
             );
-            onload_append(() => {
-                const t = theme_changer();
-                if (t)
-                    t.addEventListener("click", _ => set_dark(!get_dark()));
-                else
-                    alert("Theme changer not found!");
-            });
+            // Move all `button.toggle` to after first H1 or beginning of body
             onload_append(() => {
                 const p = document.createElement('p');
                 const h1s = document.getElementsByTagName('h1');
-                if (h1s.length) {
-                    h1s[0].after(p);
-                } else {
-                    document.body.firstChild.before(p);
-                }
+                const m = document.getElementById('--internal-main');
+                if (h1s.length) h1s[0].after(p);
+                else if (m) m.firstChild.before(p);
+                else document.body.firstChild.before(p);
                 const toggles = [...document.getElementsByClassName('toggle')];
-                for (let i = 0; i < toggles.length; i++) {
-                    p.appendChild(toggles[i]);
-                }
+                for (let t of toggles) p.appendChild(t);
             });
+            // Move `zola serve` autoreload script to beginning of body
+            onload_append(() => {
+                const scripts = [...document.getElementsByTagName('script')];
+                for (let s of scripts)
+                    if (s.parentNode === document.body)
+                        document.body.firstChild.before(s);
+            });
+            // Initialize font-size value display (XS,S,M,XL,2xL,3xL)
             onload_append(rotate_fontsize);
+            // Clone table of contents to every single TOC anchor
+            onload_append(() => {
+                const anchor_fn = kind => {
+                    const anchors = [...document.getElementsByClassName(`--internal-${kind}-anchor`)];
+                    const t = document.getElementById(`--internal-simple-${kind}-template`);
+                    if (anchors.length == 0 || !t) return;
+                    for (let a of anchors) {
+                        const el = t.content.cloneNode(true);
+                        if ("--attn-internal-label" in a.attributes) {
+                            console.log(`${kind}:A`);
+                            const p = document.createElement('p');
+                            p.classList.toggle(`simple-${kind}-label`);
+                            p.textContent = a.attributes["--attn-internal-label"].textContent;
+                            a.after(p);
+                            p.after(el);
+                        } else {
+                            console.log(`${kind}:B`);
+                            a.after(el);
+                        }
+                        a.remove();
+                    }
+                }
+                anchor_fn('toc');
+                anchor_fn('pages');
+            });
 
             return onload;
         })();
     </script>
     {% block head -%}
     <title>
-        {%- if page.title %}{{ page.title }} :: {% endif -%}
-        {%- if section.title %}{{ section.title }} :: {% endif -%}
+        {%- if page.title %}{{ page.title }} :: {% elif section.title %}{{ section.title }} :: {% endif -%}
         {{ config.title }}
     </title>
     {%- endblock head %}
 </head>
-<body class='color-light-1 try-retina more-emphasis dense small' onload='body_onload();'>
+<body class='color-light-1 try-retina more-emphasis dense small hide-buttontext' onload='body_onload();'>
     <blockquote id='--internal-javascript-check' style='font-size: 200%;'>
         <p>This page optionally requires <em>Javascript</em> to provide styling and accessibility features. The JS load is designed to be <em>light</em> and only as much as <em>necessary</em> to provide functionality.</p>
         <p>This is a static website; our server will not (and <em>cannot</em>) recording any data, so relax ;)</p>
     </blockquote>
-    <button class='toggle' id='--internal-theme-changer' title='Toggle Light or Dark Theme'></button>
-    <button class='toggle' onclick='document.body.classList.toggle("color-blind")' title='Toggle Color-Blind'><strong>B</strong> <em>I</em></button>
-    <button class='toggle em-demo' onclick='rotate_emphasis()' title='Rotate Between Heading Colors'><b>H</b></button>
-    <button class='toggle sp-demo' onclick='rotate_letterspacing()' title='Adjust Letter and Word Spacing'><b>Sp</b></button>
-    <button class='toggle' onclick='rotate_fontsize()' id='--internal-fontsize-changer' title='Rotate Between Font Sizes'></button>
-    <button class='toggle' onclick='document.body.classList.toggle("dyslexic")' title='Toggle OpenDyslexic Font'><span style='font-family: Open-Dyslexic, sans-serif;'>Dys</span></button>
-    <button class='toggle min-demo' onclick='rotate_minimal()' title='Toggle Minimalism'><code>min</code></button>
-    {% block content -%}
-    <h1>Attention!!!</h1>
-    <p>…Hello, world :3</p>
-    {%- endblock %}
+
+    {%- if page -%}
+    {%- set zzzzTocHolder = page -%}
+    {%- elif section -%}
+    {%- set zzzzTocHolder = section -%}
+    <template id='--internal-simple-pages-template'>
+        <blockquote class='simple-pages'>
+            {%- for s in section.subsections -%}
+            {%- set zzzzSubsec = get_section(path=s) -%}
+            <p><a href="{{ zzzzSubsec.permalink | safe }}">§ {{ zzzzSubsec.title }}</a></p>
+            {%- endfor -%}
+            {%- for p in section.pages -%}
+            <p><a href="{{ p.permalink | safe }}">{{ p.title }}</a></p>
+            {%- endfor -%}
+        </blockquote>
+    </template>
+    {%- endif -%}
+    {%- if zzzzTocHolder -%}
+    <template id='--internal-simple-toc-template'>
+        <blockquote class='simple-toc'>
+            {%- for h in zzzzTocHolder.toc -%}
+            <p class='header{{ h.level }}'><a href="{{ h.permalink | safe }}">{{ h.title }}</a></p>
+            {%- for h in h.children -%}
+            <p class='header{{ h.level }}'><a href="{{ h.permalink | safe }}">{{ h.title }}</a></p>
+            {%- for h in h.children -%}
+            <p class='header{{ h.level }}'><a href="{{ h.permalink | safe }}">{{ h.title }}</a></p>
+            {%- for h in h.children -%}
+            <p class='header{{ h.level }}'><a href="{{ h.permalink | safe }}">{{ h.title }}</a></p>
+            {%- for h in h.children -%}
+            <p class='header{{ h.level }}'><a href="{{ h.permalink | safe }}">{{ h.title }}</a></p>
+            {%- for h in h.children -%}
+            <p class='header{{ h.level }}'><a href="{{ h.permalink | safe }}">{{ h.title }}</a></p>
+            {%- endfor -%}{%- endfor -%}{%- endfor -%}{%- endfor -%}{%- endfor -%}{%- endfor -%}
+        </blockquote>
+    </template>
+    {%- endif -%}
+
+    <button class='toggle' onclick='document.body.classList.toggle("hide-buttontext")' title='Toggle Long Button Text' style='font-family: Open-Dyslexic, sans-serif;'><span class='buttontext'>Hide</span> Help</button>
+    <button class='toggle' onclick='document.getElementById("--internal-home-button")?.click()' title='Go To Home Page'>🏠 <span class='buttontext'>Home</span></button>
+    <a hidden href='{{ config.base_url }}' id='--internal-home-button'></a>
+    <button class='toggle' onclick='try_going_back()' title='Go To Parent Page'>⬅︎ <span class='buttontext'>Back</span></button>
+    <a hidden href='..' id='--internal-back-button'></a>
+    <button class='toggle' onclick='set_dark(!get_dark())' title='Toggle Light or Dark Theme'><span id='--internal-theme-changer'></span> <span class='buttontext'>Light/Dark</span></button>
+    <button class='toggle' onclick='document.body.classList.toggle("color-blind")' title='Toggle Color-Blind'><strong>B</strong><em>I</em> <span class='buttontext'>Color Blind</span></button>
+    <button class='toggle em-demo' onclick='rotate_emphasis()' title='Rotate Between Heading Colors'><b>H<span class='buttontext'>eading Color</span></b></button>
+    <button class='toggle sp-demo' onclick='rotate_letterspacing()' title='Adjust Letter and Word Spacing'><span class='buttontext'>Letter</span> Sp<span class='buttontext'>acing</button>
+    <button class='toggle' onclick='rotate_fontsize()' title='Rotate Between Font Sizes'><span class='buttontext'>Font Size:</span> <span id='--internal-fontsize-changer'></span></button>
+    <button class='toggle' onclick='document.body.classList.toggle("dyslexic")' title='Toggle OpenDyslexic Font' style='font-family: Open-Dyslexic, sans-serif;'>Dys<span class='buttontext'>lexia</span></button>
+    <button class='toggle min-demo' onclick='rotate_minimal()' title='Toggle Minimalism'><code>min<span class='buttontext'>imal</span></code></button>
+    <article id='--internal-main'>
+        {% block content -%}
+        <h1>Attention!!!</h1>
+        <p>…Hello, world :3</p>
+        {%- endblock %}
+    </article>
 </body>
 </html>

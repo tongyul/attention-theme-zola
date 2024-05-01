@@ -1,20 +1,32 @@
 +++
 title = "/"
+sort_by = "date"
 template = "section.html"
+page_template = "page.html"
 +++
 
 # Zola Attention Theme
 
-***Attention** is a Zola theme dedicated to helping the reader focus their
-attention.* I as the author of the **Attention** theme ~~definitely doesn't
-personally experience absolutely bleak and crippling attention issues that
-almost didn't fail me multiple courses in college-level writing~~ have some
-ideas about how to combat attention issues via document formatting, such as
-enlarged character spacing, font-choice, elimination of hard-to-read bolds,
-distinct styles for text and listing… and that's the basis for the
-**Attention** theme. ~~(You don't really need to pay full attention right now
-to my rambling as I'm just testing the SASS).~~
+{{ tocAnchor(label="Contents") }}
 
+## What-Is
+
+A *readable* Zola theme dedicated to helping the reader *manage focus*. It is
+*light*, *content-focused*, and *customizable*.
+
+## Why
+
+Many website designs push a style too far at the cost of readability and visual
+contrast. This includes both trendy minimal designs and early-internet / barely
+styled ones.
+
+Have a look at some demos!! :3
+
+## In This Section
+
+{{ pagesAnchor() }}
+
+<!--
 ## Second-Level Heading
 
 I guess you might have been confused by all that you've just seen. What ~~the
@@ -85,10 +97,13 @@ screenshot.
 ## To-do
 
 - [ ] Images
-- [ ] Extended stuff like footnotes [^ft]
+- [ ] Extended stuff like footnotes [^ft] [^another]
 - [ ] To-do lists
 - [ ] Lists in general
 - [ ] Tables
 - [ ] Math(?)
 
 [^ft]: hello world
+
+[^another]: hello world again
+-->

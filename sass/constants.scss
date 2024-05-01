@@ -1,4 +1,21 @@
 :root {
-	--decor-line-width: 1px;
-	--mside: 0.15in;
+    --decor-line-width: 1px;
+    --border-width: 0.5px;
+
+    --mside-small: 0.075in;
+    --mside: 0.15in;
+    --mside-large: 0.225in;
+    --mside-x2: 0.30in;
+    --mside-x3: 0.45in;
+    --mside-x4: 0.60in;
+    --mside-x5: 0.75in;
+    --mside-x6: 0.90in;
+
+    --shadow: #999999;
+
+    --skeuo-blur: .12em;
+    --skeuo-vert-pos: 0.12em;
+    --skeuo-vert-neg: -0.12em;
+    --skeuo-hor-pos: 0;
+    --skeuo-hor-neg: 0;
 }
