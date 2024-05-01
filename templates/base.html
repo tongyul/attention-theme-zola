@@ -60,6 +60,8 @@
             const el = fontsize_changer();
             if (el) el.textContent = i < l.length ? l[i] : 'M';
         }
+        const rotate_minimal = () =>
+            rotate_template(['minimal', 'very-minimal']);
 
 
         const body_onload = (() => {
@@ -78,6 +80,7 @@
                 ];
             })();
 
+            onload_append(() => document.getElementById('--internal-javascript-check').remove());
             onload_append(() => set_dark(match_dark().matches));
             onload_append(() =>
                 match_dark()
@@ -116,13 +119,18 @@
     </title>
     {%- endblock head %}
 </head>
-<body class='color-light-1 try-retina more-emphasis dense xsmall' onload='body_onload();'>
+<body class='color-light-1 try-retina more-emphasis dense small' onload='body_onload();'>
+    <blockquote id='--internal-javascript-check' style='font-size: 200%;'>
+        <p>This page optionally requires <em>Javascript</em> to provide styling and accessibility features. The JS load is designed to be <em>light</em> and only as much as <em>necessary</em> to provide functionality.</p>
+        <p>This is a static website; our server will not (and <em>cannot</em>) recording any data, so relax ;)</p>
+    </blockquote>
     <button class='toggle' id='--internal-theme-changer' title='Toggle Light or Dark Theme'></button>
-    <button class='toggle' onclick='document.body.classList.toggle("color-blind")' title='Toggle Color-Blindness Assist'><strong>B</strong> <em>I</em></button>
+    <button class='toggle' onclick='document.body.classList.toggle("color-blind")' title='Toggle Color-Blind'><strong>B</strong> <em>I</em></button>
     <button class='toggle em-demo' onclick='rotate_emphasis()' title='Rotate Between Heading Colors'><b>H</b></button>
     <button class='toggle sp-demo' onclick='rotate_letterspacing()' title='Adjust Letter and Word Spacing'><b>Sp</b></button>
     <button class='toggle' onclick='rotate_fontsize()' id='--internal-fontsize-changer' title='Rotate Between Font Sizes'></button>
     <button class='toggle' onclick='document.body.classList.toggle("dyslexic")' title='Toggle OpenDyslexic Font'><span style='font-family: Open-Dyslexic, sans-serif;'>Dys</span></button>
+    <button class='toggle min-demo' onclick='rotate_minimal()' title='Toggle Minimalism'><code>min</code></button>
     {% block content -%}
     <h1>Attention!!!</h1>
     <p>…Hello, world :3</p>
