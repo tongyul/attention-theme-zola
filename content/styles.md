@@ -1,6 +1,7 @@
 +++
 title = "Bold, Italics, and More"
-date = "2024-05-01"
+description = "A show-off of all the style that my theme currently supports (which is a lot, and I'm proud of it)"
+date = "2024-05-02"
 +++
 
 # **Bold**, *Italics*, and More

@@ -1,5 +1,6 @@
 +++
 title = "Attention Theme"
+description = "A readable Zola theme dedicated to helping the reader manage focus"
 sort_by = "date"
 template = "section.html"
 page_template = "page.html"

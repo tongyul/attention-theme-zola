@@ -147,7 +147,7 @@
     </script>
     {% block head -%}
     <title>
-        {%- if page.title %}{{ page.title }} :: {% elif section.title != config.title %}{{ section.title }} :: {% endif -%}
+        {%- if page.title %}{{ page.title }} :: {% elif section.title and section.title != config.title %}{{ section.title }} :: {% endif -%}
         {{ config.title }}
     </title>
     {%- endblock head %}
@@ -167,9 +167,20 @@
             {%- for s in section.subsections -%}
             {%- set zzzzSubsec = get_section(path=s) -%}
             <p><a href="{{ zzzzSubsec.permalink | safe }}">§ {{ zzzzSubsec.title }}</a></p>
+            {%- if zzzzSubsec.description -%}
+            <p class='header2'>{{ zzzzSubsec.description }}</p>
+            {%- endif -%}
             {%- endfor -%}
             {%- for p in section.pages -%}
-            <p><a href="{{ p.permalink | safe }}">{{ p.title }}</a></p>
+            <p style='float: clear;'>
+            {%- if p.date -%}
+            <span style='float: inline-end;'>{{ p.date }}</span>
+            {%- endif -%}
+            <a href="{{ p.permalink | safe }}">{{ p.title }}</a>
+            </p>
+            {%- if p.description -%}
+            <p class='header2'>{{ p.description }}</p>
+            {%- endif -%}
             {%- endfor -%}
         </blockquote>
     </template>
