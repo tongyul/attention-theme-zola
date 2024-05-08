@@ -238,6 +238,26 @@ body {
     }
 
     &>div.footnote-definition:last-child { border-bottom: none; }
+
+    div.vertical.image-strip {
+        float: right;
+        max-width: .75in;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
+
+        img {
+            width: 100%;
+            opacity: 80%;
+            margin-bottom: 1px;
+            &:last-child { border-radius: 0 0 0 .1in; }
+            &:hover { opacity: 100%; }
+        }
+    }
 }
 
 body.color-dark-1 {
@@ -311,6 +331,13 @@ body.minimal, body.very-minimal {
     }
     h1, .min-demo>code { background: none; }
     code { border-radius: .3em; }
+
+    div.vertical.image-strip {
+        img {
+            &:first-child { border-radius: .1in .1in 0 0; }
+            &:last-child { border-radius: 0 0 .1in .1in; }
+        }
+    }
 }
 
 body.minimal {
