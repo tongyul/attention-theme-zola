@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://tongyul.github.io/attention-theme-zola/attention.css">
+    <script>
+        const theme_changer = () =>
+            document.getElementById('--internal-theme-changer');
+        const fontsize_changer = () =>
+            document.getElementById('--internal-fontsize-changer');
+
+        function match_dark() {
+            return window.matchMedia('(prefers-color-scheme: dark)');
+        }
+        function get_dark() {
+            return document.body.classList.contains('color-dark-1');
+        }
+        function set_dark(is_dark) {
+            const t = theme_changer();
+            if (is_dark) {
+                document.body.classList.remove('color-light-1');
+                document.body.classList.add('color-dark-1');
+                if (t) t.textContent = '🌙';
+            } else {
+                document.body.classList.remove('color-dark-1');
+                document.body.classList.add('color-light-1');
+                if (t) t.textContent = '☀️';
+            }
+        }
+        function try_going_back() {
+            let a = location.href.toString();
+            while (a[a.length - 1] == '/') a = a.substr(0, a.length - 1);
+            const b = "https://tongyul.github.io/attention-theme-zola";
+            if (a.includes(b) && b.length < a.trimRight('/').length)
+                document.getElementById('--internal-back-button')?.click();
+        }
+
+        function rotate_template(classes) {
+            const cl = document.body.classList;
+            const e = classes;
+            let i = 0;
+            while (i < e.length && !cl.contains(e[i])) i += 1;
+            for (let c of e) cl.remove(c);
+            i = (i + 1) % (e.length + 1);
+            if (i < e.length) cl.add(e[i]);
+            return i;
+        }
+
+        const rotate_emphasis = () => rotate_template([
+            'more-emphasis',
+            'even-more-emphasis',
+            'another-emphasis',
+        ]);
+        const rotate_letterspacing = () => rotate_template([
+            'sparse',
+            'xdense',
+            'dense',
+        ]);
+        const rotate_fontsize = () => {
+            const e = [
+                'large', 'xlarge', 'xxlarge', 'xxxlarge',
+                'xsmall', 'small',
+            ];
+            const l = ['L', 'XL', '2xL', '3xL', 'XS', 'S'];
+            const i = rotate_template(e);
+            const el = fontsize_changer();
+            if (el) el.textContent = i < l.length ? l[i] : 'M';
+        }
+        const rotate_minimal = () =>
+            rotate_template(['minimal', 'very-minimal']);
+
+
+        const body_onload = (() => {
+
+            const [onload, onload_append] = (() => {
+                let onload_list = [];
+                let onload_called = false;
+                return [
+                    () => {
+                        if (!onload_called) {
+                            onload_called = true;
+                            for (let f of onload_list) f();
+                        }
+                    },
+                    f => onload_list.push(f),
+                ];
+            })();
+
+            // Remove warning element to enable JS
+            onload_append(() => document.getElementById('--internal-javascript-check').remove());
+            // Initially set the theme to system
+            onload_append(() => set_dark(match_dark().matches));
+            // Adjust theme based on system theme change
+            onload_append(() =>
+                match_dark()
+                    .addEventListener("change", ev => set_dark(ev.matches))
+            );
+            // Move all `button.toggle` to after first H1 or beginning of body
+            onload_append(() => {
+                const p = document.createElement('p');
+                const h1s = document.getElementsByTagName('h1');
+                const m = document.getElementById('--internal-main');
+                if (h1s.length) h1s[0].after(p);
+                else if (m) m.firstChild.before(p);
+                else document.body.firstChild.before(p);
+                const toggles = [...document.getElementsByClassName('toggle')];
+                for (let t of toggles) p.appendChild(t);
+            });
+            // Move `zola serve` autoreload script to beginning of body
+            onload_append(() => {
+                const scripts = [...document.getElementsByTagName('script')];
+                for (let s of scripts)
+                    if (s.parentNode === document.body)
+                        document.body.firstChild.before(s);
+            });
+            // Initialize font-size value display (XS,S,M,XL,2xL,3xL)
+            onload_append(rotate_fontsize);
+            // Clone table of contents to every single TOC anchor
+            onload_append(() => {
+                const anchor_fn = kind => {
+                    const anchors = [...document.getElementsByClassName(`--internal-${kind}-anchor`)];
+                    const t = document.getElementById(`--internal-simple-${kind}-template`);
+                    if (anchors.length == 0 || !t) return;
+                    for (let a of anchors) {
+                        const el = t.content.cloneNode(true);
+                        if ("--attn-internal-label" in a.attributes) {
+                            console.log(`${kind}:A`);
+                            const p = document.createElement('p');
+                            p.classList.toggle(`simple-${kind}-label`);
+                            p.textContent = a.attributes["--attn-internal-label"].textContent;
+                            a.after(p);
+                            p.after(el);
+                        } else {
+                            console.log(`${kind}:B`);
+                            a.after(el);
+                        }
+                        a.remove();
+                    }
+                }
+                anchor_fn('toc');
+                anchor_fn('pages');
+            });
+
+            return onload;
+        })();
+    </script>
+    <title>Attention Theme
+    </title>
+</head>
+<body class='color-light-1 try-retina color-blind minimal more-emphasis dense small hide-buttontext' onload='body_onload();'>
+    <blockquote id='--internal-javascript-check' style='font-size: 200%;'>
+        <p>This page optionally requires <em>Javascript</em> to provide styling and accessibility features. The JS load is designed to be <em>light</em> and only as much as <em>necessary</em> to provide functionality.</p>
+        <p>This is a static website; our server will not (and <em>cannot</em>) recording any data, so relax ;)</p>
+    </blockquote><template id='--internal-simple-pages-template'>
+        <blockquote class='simple-pages'><p><a href="https://tongyul.github.io/attention-theme-zola/subsection2/">§ Another Subsection</a></p><p><a href="https://tongyul.github.io/attention-theme-zola/subsection/">§ Subsection</a></p><p class='header2'>Hello, world!</p><p style='float: clear;'><span style='float: inline-end;'>2024-05-02</span><a href="https://tongyul.github.io/attention-theme-zola/styles/">Bold, Italics, and More</a>
+            </p><p class='header2'>A show-off of all the style that my theme currently supports (which is a lot, and I&#x27;m proud of it)</p><p style='float: clear;'><span style='float: inline-end;'>2024-05-01</span><a href="https://tongyul.github.io/attention-theme-zola/code/">Formatting Code</a>
+            </p><p style='float: clear;'><span style='float: inline-end;'>2024-05-01</span><a href="https://tongyul.github.io/attention-theme-zola/headings1/">Headings Demo 1</a>
+            </p><p style='float: clear;'><span style='float: inline-end;'>2024-05-01</span><a href="https://tongyul.github.io/attention-theme-zola/headings2/">Headings Demo 2</a>
+            </p><p style='float: clear;'><span style='float: inline-end;'>2024-05-01</span><a href="https://tongyul.github.io/attention-theme-zola/next-up/">Next Steps</a>
+            </p></blockquote>
+    </template><template id='--internal-simple-toc-template'>
+        <blockquote class='simple-toc'><p class='header1'><a href="https://tongyul.github.io/attention-theme-zola/#zola-attention-theme">Zola Attention Theme</a></p><p class='header2'><a href="https://tongyul.github.io/attention-theme-zola/#what-is">What-Is</a></p><p class='header2'><a href="https://tongyul.github.io/attention-theme-zola/#why">Why</a></p><p class='header2'><a href="https://tongyul.github.io/attention-theme-zola/#in-this-section">In This Section</a></p></blockquote>
+    </template><button class='toggle' onclick='document.body.classList.toggle("hide-buttontext")' title='Toggle Long Button Text' style='font-family: Open-Dyslexic, sans-serif;'><span class='buttontext'>Hide</span> Help</button>
+    <button class='toggle' onclick='document.getElementById("--internal-home-button")?.click()' title='Go To Home Page'>🏠 <span class='buttontext'>Home</span></button>
+    <a hidden href='https:&#x2F;&#x2F;tongyul.github.io&#x2F;attention-theme-zola' id='--internal-home-button'></a>
+    <button class='toggle' onclick='try_going_back()' title='Go To Parent Page'>⬅︎ <span class='buttontext'>Back</span></button>
+    <a hidden href='..' id='--internal-back-button'></a>
+    <button class='toggle' onclick='set_dark(!get_dark())' title='Toggle Light or Dark Theme'><span id='--internal-theme-changer'></span> <span class='buttontext'>Light/Dark</span></button>
+    <button class='toggle' onclick='document.body.classList.toggle("color-blind")' title='Toggle Color-Blind'><strong>B</strong><em>I</em> <span class='buttontext'>Color Blind</span></button>
+    <button class='toggle em-demo' onclick='rotate_emphasis()' title='Rotate Between Heading Colors'><b>H<span class='buttontext'>eading Color</span></b></button>
+    <button class='toggle sp-demo' onclick='rotate_letterspacing()' title='Adjust Letter and Word Spacing'><span class='buttontext'>Letter</span> Sp<span class='buttontext'>acing</button>
+    <button class='toggle' onclick='rotate_fontsize()' title='Rotate Between Font Sizes'><span class='buttontext'>Font Size:</span> <span id='--internal-fontsize-changer'></span></button>
+    <button class='toggle' onclick='document.body.classList.toggle("dyslexic")' title='Toggle OpenDyslexic Font' style='font-family: Open-Dyslexic, sans-serif;'>Dys<span class='buttontext'>lexia</span></button>
+    <button class='toggle min-demo' onclick='rotate_minimal()' title='Toggle Minimalism'><code>min<span class='buttontext'>imal</span></code></button>
+    <article id='--internal-main'>
+        <h1 id="zola-attention-theme">Zola Attention Theme</h1>
+<p class='--internal-toc-anchor'--attn-internal-label="Contents">(table of contents should render here)</p>
+<h2 id="what-is">What-Is</h2>
+<p>A <em>readable</em> Zola theme dedicated to helping the reader <em>manage focus</em>. It is
+<em>light</em>, <em>content-focused</em>, and <em>customizable</em>.</p>
+<h2 id="why">Why</h2>
+<p>Many website designs push a style too far at the cost of readability and visual
+contrast. This includes both trendy minimal designs and early-internet / barely
+styled ones.</p>
+<p>Have a look at some demos!! :3</p>
+<h2 id="in-this-section">In This Section</h2>
+<p class='--internal-pages-anchor'>(pages in this section should render here)</p>
+<!--
+## Second-Level Heading
+
+I guess you might have been confused by all that you've just seen. What ~~the
+fuck~~ are these colors? Where are the **bolds** and *italics*? **Attention**
+avoid font variations in order to preserve readability, but instead exploit
+color difference; unfortunately, this would also mean that the theme is not
+usable if one has the particular color blindness—oh well, but the colors are
+always customizable ~~actually not yet~~. (Here is some `\texttt{}` please
+enjoy.) ([Links are de-emphasized.](/))
+
+<button onclick="document.body.classList.toggle('try-retina');">Toggle `try-retina`</button>
+(Retina-resolution currently isn't any different.)
+
+`just some code (still in-line tho)`
+
+just some text
+
+`just some very very very very very very very very very very very very very very very very long in-line code`
+
+```bash
+$ echo "Actual code that is not in-line"
+$ echo "I haven't figured out how to make syntax highlighting not look nasty in light mode."
+$ echo "Oh well, at least they're horizontally scrollable."
+```
+
+You can get italics from `<i></i>` if you *really* need to modify the font
+style, but *do you*? EDIT: `<cite></cite>` has been unitalicized and given a
+different color (<cite>Myself, 2023</cite>). This helps the reader skip
+long-and-wordy citations as well as focus on them when necessary.
+
+> Winners win, losers lose.
+>
+> —<cite>My high-school biology teacher</cite>
+
+$${
+\def\i {\mathbfit{i}}
+\frac{-\hbar^2}{2m}\frac{\partial^2\Psi}{\partial x^2}+V(x)=\i\hbar\frac{\partial\Psi}{\partial t}
+}$$
+
+### Third-Level Heading
+
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
+
+#### Fourth-Level Heading
+
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
+
+##### Fifth-Level Heading
+
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
+
+###### Sixth-Level Heading
+
+This is a stub-text paragraph that tries very hard to make itself look very long
+and full of content yet still struggles to fill up even just three lines. But
+actually, I don't want it long, so that I can fit more headings into the same
+screenshot.
+
+## To-do
+
+- [ ] Images
+- [ ] Extended stuff like footnotes [^ft] [^another]
+- [ ] To-do lists
+- [ ] Lists in general
+- [ ] Tables
+- [ ] Math(?)
+
+[^ft]: hello world
+
+[^another]: hello world again
+-->
+
+    </article>
+</body>
+</html>
